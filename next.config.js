@@ -1,13 +1,11 @@
+const path = require("path");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
     ignoreBuildErrors: true,
   },
   images: { unoptimized: true },
@@ -18,6 +16,10 @@ const nextConfig = {
     "*.macaly-app.com",
     "*.macaly-user-data.dev",
   ],
+  webpack: (config) => {
+    config.resolve.alias["@/lib"] = path.resolve(__dirname, "lib");
+    return config;
+  },
 };
 
 module.exports = nextConfig;
